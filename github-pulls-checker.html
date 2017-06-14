@@ -19,7 +19,7 @@ tr:nth-child(even) {
 }
 </style>
 <script>
-function UserAction(state) {
+function getPulls(state) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("GET", "https://api.github.com/repos/owlcs/owlapi/pulls?state=" + state, false);
 	xhttp.setRequestHeader("Content-type", "application/json");
@@ -27,6 +27,13 @@ function UserAction(state) {
 	var response = JSON.parse(xhttp.responseText);
 	   
 	showTable(response, state);
+}
+
+function mergePull() {
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "https://api.github.com/repos/FonyLi/FakeRepo/pulls//thenumber/merge", false);
+	xhttp.setRequestHeader("Content-type", "application/json");
+	xhttp.send();
 }
 
 function showTable(response, state) {
@@ -85,8 +92,9 @@ function showTable(response, state) {
 	<table id="openPulls"></table>
 	<table id="closePulls"></table>
 
-	<button type="button" onclick="UserAction('open')">Get open pulls</button>
-	<button type="button" onclick="UserAction('close')">Get close pulls</button>
+	<button type="button" onclick="getPulls('open')">Get open pulls</button>
+	<button type="button" onclick="getPulls('close')">Get close pulls</button>
+	<button type="button" onclick="mergePull()">Merge pull</button>
 
 </body>
 </html>
