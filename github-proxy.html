@@ -31,13 +31,24 @@ function getPulls(state) {
 
 function mergePull() {
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("PUT", "https://api.github.com/repos/FonyLi/FakeRepo/merges?base=master", false);
+	//xhttp.open("GET","https://api.github.com/repos/FonyLi/FakeRepo/pulls/1/merge?commit_title=test3&commit_message=merge3Again", false);
+	
+	//xhttp.open("GET", "https://api.github.com/repos/FonyLi/FakeRepo/pulls/1/merge", false);	
+	//xhttp.setRequestHeader("Content-type", "application/json");
+	//xhttp.send();
+	
+	//xhttp.open("GET", "https://api.github.com/repos/FonyLi/FakeRepo/pulls/2/merge", false);
+	//xhttp.setRequestHeader("Content-type", "application/json");
+	//xhttp.send();
+	
+	xhttp.open("PUT", "https://api.github.com/repos/FonyLi/FakeRepo/pulls/3/merge?commit_title=test3", false);
 	xhttp.setRequestHeader("Content-type", "application/json");
 	xhttp.send();
 	
-	var response = JSON.parse(xhttp.responseText);
+	window.alert(xhttp.responseText);
+	//var response = JSON.parse(xhttp.responseText);
 	
-	window.alert(response.message);
+	//window.alert(response.message);
 }
 
 function showTable(response, state) {
