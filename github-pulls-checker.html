@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+<script>
+function UserAction(state) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "https://api.github.com/repos/owlcs/owlapi/pulls?state=" + state, false);
+	xhttp.setRequestHeader("Content-type", "application/json");
+	xhttp.send();
+	var response = JSON.parse(xhttp.responseText);
+	   
+	showTable(response, state);
+}
+
+function showTable(response, state) {
+	var totalRows = response.length;
+	var cellsInRow = 3;
+
+	// creates a <table> element
+	var tbl = document.getElementById(state + 'Pulls');
+
+	//remove previous results
+	while(tbl.hasChildNodes()){
+	   Parent.removeChild(Parent.firstChild);
+	}
+	
+	//add header
+	var tr = document.createElement('tr');
+	tbl.appendChild(tr);
+	var td = document.createElement('th');
+	td.innerHTML = 'ID';
+	tr.appendChild(td);
+	td = document.createElement('th');
+	td.innerHTML = 'state';
+	tr.appendChild(td);
+	td = document.createElement('th');
+	td.innerHTML = 'title';
+	tr.appendChild(td);
+		
+	//add pulls details
+	for (var index in response) {
+		var tr = document.createElement('tr');
+		tbl.appendChild(tr);
+
+		var pull = response[index];
+		var td = document.createElement('td');
+		td.innerHTML = pull.id;
+		tr.appendChild(td);
+	   
+		td = document.createElement('td');
+		td.innerHTML = pull.state;
+		tr.appendChild(td);
+	   
+		td = document.createElement('td');
+		td.innerHTML = pull.title;
+		tr.appendChild(td);
+	}
+   
+	//window.onload=tbl; 
+}
+
+</script>
+</head>
+
+<body>
+
+	<h1>Github Pulls Checker</h1>
+	<table id="openPulls"></table>
+	<table id="closePulls"></table>
+
+	<button type="button" onclick="UserAction('open')">Get open pulls</button>
+	<button type="button" onclick="UserAction('close')">Get close pulls</button>
+
+</body>
+</html>
