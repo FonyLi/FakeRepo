@@ -31,9 +31,12 @@ function getPulls(state) {
 
 function mergePull() {
 	var xhttp = new XMLHttpRequest();
+	
 	//it doesn't work..
 	xhttp.open("PUT", "https://api.github.com/repos/FonyLi/FakeRepo/pulls/6/merge", false);
 	xhttp.setRequestHeader("Content-type", "application/json");
+	
+	//it always say 404 not found..
 	xhttp.send("commit_title=test3&commit_message=test3&merge_method=merge");
 	
 	window.alert(xhttp.responseText);
